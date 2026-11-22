@@ -2,7 +2,7 @@
 
 ## View the project
 
-View the full analysis: https://jinfang-zhang.github.io/education_and_immigration_attitudes/
+View the full analysis: https://jinfang-zhang.github.io/Education_and_Immigration_Attitudes/
 
 ## About
 
