@@ -23,7 +23,6 @@ The project includes:
 - multiple linear regression
 - HC3 robust standard errors
 - VIF checks
-- coefficient visualization
 
 All regression models use the same complete-case sample to make model comparisons more consistent.
 
@@ -42,4 +41,4 @@ Because the data are cross-sectional and observational, the results should be in
 
 ## Tools
 
-R · tidyverse · ggplot2 · linear regression · robust standard errors
+R · tidyverse · ggplot2 · linear regression 
