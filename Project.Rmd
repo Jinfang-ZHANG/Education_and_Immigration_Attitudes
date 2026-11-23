@@ -362,23 +362,6 @@ model_3 <- lm(
 ### Model Comparison
 
 ```{r model-comparison}
-gof_map <- data.frame(
-  raw = c(
-    "nobs",
-    "r.squared",
-    "adj.r.squared"
-  ),
-  clean = c(
-    "N",
-    "R²",
-    "Adjusted R²"
-  ),
-  fmt = c(
-    0,
-    3,
-    3
-  )
-)
 
 modelsummary(
   list(
@@ -387,8 +370,7 @@ modelsummary(
     "Extended" = model_3
   ),
   stars = TRUE,
-  statistic = "({std.error})",
-  gof_map = gof_map,
+  statistic = "({std.error})"
 )
 ```
 
@@ -400,104 +382,6 @@ Education remains positively associated with immigration attitudes after
 the introduction of sociodemographic, economic, and attitudinal
 characteristics.
 
-## Coefficient Plot
-
-The coefficient plot summarizes the estimated relationships in the
-extended model and displays 95% confidence intervals.
-
-```{r coefficient-data}
-coefficient_data <- broom::tidy(
-  model_3,
-  conf.int = TRUE
-) %>%
-  dplyr::filter(
-    term != "(Intercept)"
-  ) %>%
-  dplyr::mutate(
-    term_label = dplyr::case_when(
-      term == "education" ~
-        "Education",
-
-      term == "age" ~
-        "Age",
-
-      term == "genderFemale" ~
-        "Female",
-
-      term ==
-        "born_countryBorn outside Netherlands" ~
-        "Born outside Netherlands",
-
-      term == "perceived_income" ~
-        "Perceived income difficulty",
-
-      term == "religiosity" ~
-        "Religiosity",
-
-      term == "household_income" ~
-        "Household income",
-
-      term == "cultural_value" ~
-        "Cultural value",
-
-      term == "social_trust" ~
-        "Social trust",
-
-      TRUE ~ term
-    ),
-
-    significant = if_else(
-      p.value < 0.05,
-      "Significant",
-      "Not significant"
-    )
-  )
-```
-
-```{r coefficient-plot}
-p_coefficients <- ggplot(
-  coefficient_data,
-  aes(
-    x = reorder(term_label, estimate),
-    y = estimate
-  )
-) +
-  geom_hline(
-    yintercept = 0,
-    linetype = "dashed",
-    colour = "grey55"
-  ) +
-  geom_errorbar(
-    aes(
-      ymin = conf.low,
-      ymax = conf.high
-    ),
-    width = 0.12,
-    linewidth = 0.8,
-    colour = "grey45"
-  ) +
-  geom_point(
-    aes(
-      shape = significant
-    ),
-    size = 3,
-    colour = "#2F5D50"
-  ) +
-  coord_flip() +
-  labs(
-    title =
-      "Key Predictors of Immigration Attitudes",
-    x = NULL,
-    y = "Estimated coefficient",
-    shape = NULL,
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = "bottom"
-  )
-
-p_coefficients
-```
 
 # Model Evaluation
 
